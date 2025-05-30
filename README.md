@@ -5,22 +5,22 @@ This is a fullstack web application built using **Django** for the backend and *
 ## 🚀 Features
 
 - User Authentication (Register, Login, Logout)
+- User Profile with preferred currency, timezone, theme, and more
 - API powered by Django REST Framework
+- Token or API Key-based authentication using Djoser
 - Dynamic React frontend with routing
-- JWT-based authentication using Djoser (optional)
 - Reusable and modular component structure
-- Fully responsive UI
-- Integrated PostgreSQL / SQLite database
+- Integrated PostgreSQL or SQLite database
 - Custom error handling and form validation
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - React
-- Vite (or Create React App)
+- Vite
 - Axios
 - React Router
-- Tailwind CSS (or other CSS framework)
+- CSS Modules / Plain CSS
 
 ### Backend
 - Django
@@ -28,6 +28,7 @@ This is a fullstack web application built using **Django** for the backend and *
 - Djoser (for auth)
 - PostgreSQL or SQLite
 - CORS Headers
+- Django REST Framework API Key (optional)
 
 ## 🗂️ Project Structure
 
@@ -88,24 +89,50 @@ npm run dev
 SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
-DATABASE_URL=sqlite:///db.sqlite3  # or your PostgreSQL URL
+DATABASE_URL=sqlite:///db.sqlite3
 ```
 
 ### Frontend `.env`
 
 ```
 VITE_API_URL=http://localhost:8000/api
+VITE_API_KEY=your-api-key-if-using-api-key-auth
+```
+
+## 👤 User Profile
+
+Each registered user has an associated profile with:
+- Preferred currency (e.g., USD, EUR)
+- Timezone (e.g., UTC, Asia/Manila)
+- Theme (light/dark)
+- Language preference
+- Notifications enabled
+- Optional profile picture upload
+
+> Profiles are automatically created using Django signals.
+
+## 🔓 Authentication
+
+This app supports:
+- Token-based authentication using **Djoser**
+- Optional API Key-based access using **drf-api-key**
+
+Configure your frontend to send the proper headers in requests:
+
+```js
+headers: {
+  Authorization: "Token YOUR_TOKEN" // or "Api-Key YOUR_KEY"
+}
 ```
 
 ## 📦 Build for Production
 
 ### Backend
 
-Make sure to:
-- Disable `DEBUG`
-- Set `ALLOWED_HOSTS`
-- Configure static and media files
-- Use Gunicorn + Nginx if deploying
+- Set `DEBUG=False`
+- Set appropriate `ALLOWED_HOSTS`
+- Configure static/media file serving
+- Optional: Use Gunicorn + Nginx for deployment
 
 ### Frontend
 
@@ -113,23 +140,13 @@ Make sure to:
 npm run build
 ```
 
-Then serve the frontend from Django (using WhiteNoise or collect static files).
-
-## 🧪 Testing
-
-```bash
-# Django tests
-python manage.py test
-
-# React tests (if using Jest/React Testing Library)
-npm run test
-```
+> Optionally serve the built frontend from Django (not implemented yet).
 
 ## 🚀 Deployment
 
-You can deploy on:
-- Heroku
-- Vercel (frontend) + Render (backend)
+You can deploy this stack using:
+- Render, Railway, or Heroku
+- Vercel (frontend) + Backend API host
 - DigitalOcean / GCP / AWS
 - Docker (optional)
 
@@ -138,7 +155,8 @@ You can deploy on:
 - [Django REST Framework](https://www.django-rest-framework.org/)
 - [React](https://reactjs.org/)
 - [Djoser](https://djoser.readthedocs.io/)
-- [Tailwind CSS](https://tailwindcss.com/)
+- [DRF API Key](https://florimond.dev/open-source/drf-api-key/)
+- [Vite](https://vitejs.dev/)
 
 ## 📄 License
 
