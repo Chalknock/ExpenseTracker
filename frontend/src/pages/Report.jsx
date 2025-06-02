@@ -16,7 +16,7 @@ import {
 import api from "../Api"; 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A"];
 
-const Overview = () => {
+const Report = () => {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const Overview = () => {
       amount: parseFloat(exp.amount),
     }))
     .sort((a, b) => new Date(a.date) - new Date(b.date));
+
   return (
     <div style={{ padding: "2rem" }}>
       <h2>Expense Reports</h2>
@@ -96,4 +97,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default Report;

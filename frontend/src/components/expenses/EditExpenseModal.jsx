@@ -13,7 +13,7 @@ const EditExpenseModal = ({ show, onClose, expense, onExpenseUpdated }) => {
   useEffect(() => {
     api
       .get("/categories/list/")
-      .then((res) => setCategories(res.data))
+      .then((res) => setCategories(res.data.results))
       .catch((err) => console.error("Failed to fetch categories", err));
   }, []);
 
@@ -24,7 +24,7 @@ const EditExpenseModal = ({ show, onClose, expense, onExpenseUpdated }) => {
   const handleSubmit = async () => {
     try {
       const res = await api.put(`/expenses/${formData.id}/`, formData);
-      onExpenseUpdated(res.data);
+      onExpenseUpdated(res.data.results);
       onClose();
     } catch (err) {
       console.error(err);

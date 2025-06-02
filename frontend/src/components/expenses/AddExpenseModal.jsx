@@ -14,7 +14,7 @@ const AddExpenseModal = ({ show, onClose, onExpenseAdded }) => {
   useEffect(() => {
     api
       .get("/categories/list/")
-      .then((res) => setCategories(res.data))
+      .then((res) => setCategories(res.data.results))
       .catch((err) => console.error("Failed to load categories:", err));
   }, []);
 
@@ -28,7 +28,7 @@ const AddExpenseModal = ({ show, onClose, onExpenseAdded }) => {
         category: category ? parseInt(category) : null,
         notes,
       });
-      onExpenseAdded(res.data);
+      onExpenseAdded(res.data.results);
       onClose();
       setTitle("");
       setAmount("");

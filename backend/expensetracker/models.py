@@ -33,7 +33,7 @@ class Expense(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    preferred_currency = models.CharField(max_length=10, default='USD')
+    preferred_currency = models.CharField(max_length=10, default='PHP')
     timezone = models.CharField(max_length=50, default='UTC')
     language = models.CharField(max_length=10, default='en')
     theme = models.CharField(max_length=20, default='light')

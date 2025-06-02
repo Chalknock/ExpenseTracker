@@ -30,7 +30,7 @@ const ViewExpenses = () => {
     const fetchExpenses = async () => {
       try {
         const res = await api.get("/expenses/list/");
-        setExpenses(res.data);
+        setExpenses(res.data.results);
       } catch (err) {
         console.error(
           "Error fetching expenses:",
@@ -48,7 +48,7 @@ const ViewExpenses = () => {
     const fetchCategories = async () => {
       try {
         const res = await api.get("/categories/list/");
-        setCategories(res.data);
+        setCategories(res.data.results);
       } catch (err) {
         console.error("Failed to load categories", err);
       }
@@ -92,7 +92,7 @@ const ViewExpenses = () => {
         `/expenses/${selectedExpense.id}/`,
         selectedExpense
       );
-      const updatedExpense = res.data;
+      const updatedExpense = res.data.results;
       setExpenses((prev) =>
         prev.map((exp) => (exp.id === updatedExpense.id ? updatedExpense : exp))
       );

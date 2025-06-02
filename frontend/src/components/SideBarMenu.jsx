@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Accordion, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaTachometerAlt,
   FaPlusCircle,
@@ -9,8 +9,16 @@ import {
   FaCog,
   FaFileAlt,
 } from "react-icons/fa";
+import { useAuth } from "./AuthContext"; 
 
 const SidebarMenu = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <div className="bg-light p-3" style={{ width: "250px", height: "100vh" }}>
       <h4 className="mb-4">Expense Tracker</h4>
@@ -91,6 +99,9 @@ const SidebarMenu = () => {
               </Nav.Link>
               <Nav.Link as={Link} to="/settings/preferences">
                 Preferences
+              </Nav.Link>
+              <Nav.Link as="button" onClick={handleLogout} className="text-start">
+                Logout
               </Nav.Link>
             </Nav>
           </Accordion.Body>

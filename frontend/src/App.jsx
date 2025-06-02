@@ -15,37 +15,93 @@ import CategoryBreakdown from "./pages/CategoryBreakdown";
 import ManageCategories from "./pages/ManageCategories";
 import MonthlyReport from "./pages/MonthlyReport";
 import AnnualReport from "./pages/AnnualReport";
-import ProfileSettings from "./pages/ProfileSettings";
-import PreferencesSettings from "./pages/PreferencesSettings";
+import ProfileSettings from "./components/settings/ProfileSettings";
+import PreferencesSettings from "./components/settings/PreferencesSettings";
 import ManageExpenses from "./pages/ManageExpenses";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./components/AuthContext";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Navigate to="/overview" />} />
-          <Route path="overview" element={<Overview />} />
-          <Route path="summary" element={<Summary />} />
-          <Route path="expenses/manage" element={<ManageExpenses />} />
-          {/* <Route path="expenses/view" element={<ViewExpenses />} /> */}
-          {/* <Route path="categories" element={<CategoryBreakdown />} /> */}
-          <Route path="categories/manage" element={<ManageCategories />} />
-          <Route path="reports/monthly" element={<MonthlyReport />} />
-          <Route path="reports/annual" element={<AnnualReport />} />
-          <Route path="settings/profile" element={<ProfileSettings />} />
-          <Route path="login/" element={<Login />} />
-          <Route path="register/" element={<Register />} />
-          <Route
-            path="settings/preferences"
-            element={<PreferencesSettings />}
-          />
-        </Route>
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Navigate to="/overview" />} />
+            <Route
+              path="overview"
+              element={
+                <ProtectedRoute>
+                  <Overview />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="summary"
+              element={
+                <ProtectedRoute>
+                  <Summary />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="expenses/manage"
+              element={
+                <ProtectedRoute>
+                  <ManageExpenses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="categories/manage"
+              element={
+                <ProtectedRoute>
+                  <ManageCategories />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="reports/monthly"
+              element={
+                <ProtectedRoute>
+                  <MonthlyReport />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="reports/annual"
+              element={
+                <ProtectedRoute>
+                  <AnnualReport />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="settings/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfileSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="settings/preferences"
+              element={
+                <ProtectedRoute>
+                  <PreferencesSettings />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 

@@ -19,7 +19,7 @@ const ManageCategories = () => {
 
   const fetchCategories = async () => {
     const res = await api.get("/categories/list/");
-    setCategories(res.data);
+    setCategories(res.data.results);
   };
 
   useEffect(() => {

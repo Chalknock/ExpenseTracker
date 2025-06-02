@@ -12,21 +12,29 @@ const ManageExpenses = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [expenseToEdit, setExpenseToEdit] = useState(null);
-
-  const fetchExpenses = async () => {
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const rowsPerPage = 10;
+  
+  const fetchExpenses = async (page = 1) => {
     setLoading(true);
     try {
-      const res = await api.get("/expenses/list/");
-      setExpenses(res.data);
+      const res = await api.get(`/expenses/list/?page=${page}`);
+      setExpenses(res.data.results);
+      setTotalPages(Math.ceil(res.data.count / 10)); // Adjust based on page size
+      setCurrentPage(page);
+      setTotalCount(res.data.count);
     } catch (err) {
       console.error("Failed to load expenses", err);
     } finally {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
-    fetchExpenses();
+    fetchExpenses(1);
   }, []);
 
   const handleAddExpense = (newExpense) => {
@@ -70,6 +78,12 @@ const ManageExpenses = () => {
           expenses={expenses}
           onEdit={handleEditClick}
           onDelete={handleDeleteClick}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => fetchExpenses(page)}
+
+          totalCount={totalCount}
+          rowsPerPage={rowsPerPage}
         />
       )}
 
